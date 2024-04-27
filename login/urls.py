@@ -6,6 +6,9 @@ urlpatterns=[
         
 		# path('login/', Login.as_view(), name='login'),
     	path('test/view/', TestView.as_view(), name='test_view'),
-    	path('logout/', Logout.as_view(), name='logout')
+    	path('logout/', Logout.as_view(), name='logout'),
+        
+		path('category/list',category_list,name='category_list'),
+         path('category/add',category_add,name='category_add'),
 
 ]

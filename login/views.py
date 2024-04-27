@@ -63,3 +63,24 @@ class Logout(APIView):
             raise ValidationError("User has no auth_token.")
         logout(request)
         return Response({"message": "Logout was successful."})
+    
+@api_view(['GET'])
+def category_list(request):
+    if request.method == 'GET':
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+@api_view(['GET','POST'])
+def category_add(request):
+    if request.method == 'GET':
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    elif request.method == 'POST':
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 # from django.contrib.auth.models import User
 from auth_app.models import User
+from login.models import *
 from rest_framework.authtoken.models import Token
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -28,3 +29,8 @@ class AdminSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
         return user
+    
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields='__all__'
