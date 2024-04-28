@@ -30,7 +30,17 @@ class AdminSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         return user
     
-class CategorySerializer(serializers.ModelSerializer):
+class SalerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
-        fields='__all__'
+        model = User
+        fields = ['id', 'username', 'email', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        user.is_saler = True
+        user.save()
+        Token.objects.create(user=user)
+        return user
+    
+
